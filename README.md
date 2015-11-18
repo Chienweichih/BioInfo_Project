@@ -1,7 +1,6 @@
 # BioInfo_Project
 
-##### Sample Code!!! <br />
-https://github.com/ncbo/ncbo_rest_sample_code
+### Sample Code!!! https://github.com/ncbo/ncbo_rest_sample_code
 
 我們做 project 要用的資料庫是 BioPortal <br />
 http://bioportal.bioontology.org/
