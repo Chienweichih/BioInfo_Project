@@ -1,0 +1,14 @@
+from django.conf.urls import url
+
+from . import views
+
+urlpatterns = [
+	# ex: /polls/
+    url(r'^$', views.index, name='index'),
+    # ex: /polls/display_all_data/
+    url(r'^display_all_data/$', views.display_all_data, name='display_all_data'),
+    # ex: /polls/query=Protein/
+    url(r'^query=(?P<query_text>[a-zA-Z0-9]+)/$', views.query, name='query'),
+    # ex: /polls/abstract=Protein Protein Protein/
+    url(r'^abstract=(?P<abstract_text>[a-zA-Z0-9]+)/$', views.named_entity, name='named_entity'),
+]

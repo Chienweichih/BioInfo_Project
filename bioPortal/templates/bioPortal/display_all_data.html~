@@ -1,0 +1,5 @@
+{% if html %}
+	<p>{{ html }}</p>
+{% else %}
+	<p>No data.</p>
+{% endif %}

@@ -1,0 +1,5 @@
+{% if abstract_text %}
+	<p>{{ abstract_text }}</p>
+{% else %}
+	<p>No abstract text.</p>
+{% endif %}
