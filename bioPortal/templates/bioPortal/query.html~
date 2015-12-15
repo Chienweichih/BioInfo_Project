@@ -1,5 +1,5 @@
-{% if abstract_text %}
-	<p>{{ abstract_text }}</p>
+{% if result %}
+	<p>{{ result }}</p>
 {% else %}
-	<p>No abstract text.</p>
+	<p>No query text.</p>
 {% endif %}

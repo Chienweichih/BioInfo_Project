@@ -1,8 +1,15 @@
 from django.shortcuts import render
 
+import urllib2
+from json2html import *
+
+import traceback
+import sys
+
 API_KEY = "a4a36c45-883f-432e-9dec-5db68f11f767"
 
 def index(request):
+	from django.http import HttpResponseRedirect
 	from .forms import QueryForm
 	from .forms import NamedEntityForm
 
@@ -14,8 +21,8 @@ def index(request):
 		# check whether it's valid:
 		if form_query.is_valid():
 			cd = form_query.cleaned_data
-			context = query(cd['query_text'])
-			return render(request, 'bioPortal/query.html', context)
+			query_text = cd['query_text']
+			return HttpResponseRedirect('/query/%s' % query_text)
 		elif form_named_entity.is_valid():
 			cd = form_named_entity.cleaned_data
 			context = named_entity(cd['named_entity_text'])
@@ -30,7 +37,6 @@ def index(request):
 	return render(request, 'bioPortal/index.html', context)
 
 def display_all_data(request):
-	from json2html import json2html
 	sparql_service = "http://sparql.bioontology.org/sparql/"
 
 	#Some sample query.
@@ -43,29 +49,32 @@ WHERE { ?ont a omv:Ontology;
 	         omv:name ?name .
 } 
 """
-	#search_result = get_json(query_string, API_KEY, sparql_service)
-	#html = json2html.convert(json = search_result)
-	#context = {'html' : html}
-	#return render(request, 'bioPortal/display_all_data.html', context)
+	#ncbo_sparql
+	""" search_result = ncbo_sparql(query_string, API_KEY, sparql_service)
+		html = json2html.convert(json = search_result)
+		context = {'html' : html}
+		return render(request, 'bioPortal/display_all_data.html', context) """
 
 	return render(request, 'bioPortal/display_all_data_preparation.html')
 
-def query(query_text):
-	context = {'query_text' : query_text}
-	return context
+def query(request, query_text):
+	REST_URL = "http://data.bioontology.org"
+
+	search_result = ncbo_rest(REST_URL + "/search?q=" + query_text, API_KEY)
+	html = json2html.convert(json = search_result)
+
+	context = {'result' : html}
+	return render(request, 'bioPortal/query.html', context)
 
 def named_entity(named_entity_text):
 	context = {'named_entity_text' : named_entity_text}
 	return context
 
-def get_json(q,apikey,epr,f='application/json'):
+def ncbo_sparql(q,apikey,epr,f='application/json'):
 	""" Simple Python script to query "http://sparql.bioontology.org/sparql/"
 		No extra libraries required.
 	"""
-	import urllib2
 	import urllib
-	import traceback
-	import sys
  
 	"""Function that uses urllib/urllib2 to issue a SPARQL query.
 	   By default it requests json as data format for the SPARQL resultset"""
@@ -79,6 +88,15 @@ def get_json(q,apikey,epr,f='application/json'):
 	    request.get_method = lambda: 'GET'
 	    url = opener.open(request)
 	    return url.read()
+	except Exception as e:
+	    traceback.print_exc(file=sys.stdout)
+	    raise e
+
+def ncbo_rest(url, apikey):
+	try:
+		opener = urllib2.build_opener()
+		opener.addheaders = [('Authorization', 'apikey token=' + apikey)]
+		return opener.open(url).read()
 	except Exception as e:
 	    traceback.print_exc(file=sys.stdout)
 	    raise e
