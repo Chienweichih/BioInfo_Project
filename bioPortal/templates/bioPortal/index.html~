@@ -1,7 +1,14 @@
 <br /><br /><br />
 <a href="/bioPortal/display_all_data/">display all data</a>
 <br /><br /><br />
-<a href="/bioPortal/query/">query</a>
+<form method="post">
+    {% csrf_token %}
+    {{ form_query.as_p }}
+    <input type="submit" value="Submit" />
+</form>
 <br /><br /><br />
-<!-- FORM NEEDED -->
-<a href="/bioPortal/named_entity/">named_entity</a>
+<form method="post">
+    {% csrf_token %}
+    {{ form_named_entity.as_p }}
+    <input type="submit" value="Submit" />
+</form>
