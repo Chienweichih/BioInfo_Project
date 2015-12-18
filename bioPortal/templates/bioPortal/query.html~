@@ -1,5 +1,0 @@
-{% if result %}
-	<p>{{ result }}</p>
-{% else %}
-	<p>No query text.</p>
-{% endif %}

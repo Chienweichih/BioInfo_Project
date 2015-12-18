@@ -1,5 +1,18 @@
-{% if named_entity_text %}
-	<p>{{ named_entity_text }}</p>
-{% else %}
-	<p>No abstract text.</p>
-{% endif %}
+<!DOCTYPE HTML>
+<html style="height: 100%">
+<head>
+	<title>Abstract Analysis</title>
+</head>
+
+<body style="height: 100%">
+<div class="wrapper" style="min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -8em;">
+	<center style="color: #333; padding-top: 200px; font-family: Courier; font-size: 24px; font-weight: bold;">
+	{% if named_entity_text %}
+		<p>{% autoescape off %}{{ named_entity_text }}{% endautoescape %}</p>
+	{% else %}
+		<p>No abstract text.</p>
+	{% endif %}
+	</center>
+</div>
+</body>
+</html>

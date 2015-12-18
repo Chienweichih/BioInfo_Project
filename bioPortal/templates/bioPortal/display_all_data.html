@@ -1,5 +1,20 @@
-{% if html %}
-	<p>{% autoescape off %}{{ html }}{% endautoescape %}</p>
-{% else %}
-	<p>No data.</p>
-{% endif %}
+<!DOCTYPE HTML>
+<html style="height: 100%">
+<head>
+	<title>Display All Data</title>
+</head>
+
+<body style="height: 100%">
+<div class="wrapper" style="min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -8em;">
+	<center style="color: #333; padding-top: 10px; font-family: Courier; font-weight: bold;">
+	{% if html %}
+		<p>{% autoescape off %}{{ html }}{% endautoescape %}</p>
+	{% else %}
+		<p>No data.</p>
+	{% endif %}
+	</center>
+</div>
+</body>
+</html>
+
+

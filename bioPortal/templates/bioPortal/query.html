@@ -1,5 +1,18 @@
-{% if result %}
-	<p>{% autoescape off %}{{ result }}{% endautoescape %}</p>
-{% else %}
-	<p>No query text.</p>
-{% endif %}
+<!DOCTYPE HTML>
+<html style="height: 100%">
+<head>
+	<title>Query</title>
+</head>
+
+<body style="height: 100%">
+<div class="wrapper" style="min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -8em;">
+	<center style="color: #333; padding-top: 10px; font-family: Courier; font-weight: bold;">
+	{% if result %}
+		<p>{% autoescape off %}{{ result }}{% endautoescape %}</p>
+	{% else %}
+		<p>No query text.</p>
+	{% endif %}
+	</center>
+</div>
+</body>
+</html>

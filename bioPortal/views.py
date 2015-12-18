@@ -1,11 +1,10 @@
 from django.shortcuts import render
 
 import urllib2
+import json
 from json2html import *
 
-import traceback
-import sys
-
+REST_URL = "http://data.bioontology.org"
 API_KEY = "a4a36c45-883f-432e-9dec-5db68f11f767"
 
 def index(request):
@@ -50,24 +49,34 @@ WHERE { ?ont a omv:Ontology;
 } 
 """
 	#ncbo_sparql
-	""" search_result = ncbo_sparql(query_string, API_KEY, sparql_service)
-		html = json2html.convert(json = search_result)
-		context = {'html' : html}
-		return render(request, 'bioPortal/display_all_data.html', context) """
+	"""search_result = ncbo_sparql(query_string, API_KEY, sparql_service)
+	html = json2html.convert(json = search_result)
+	context = {'html' : html}
+	return render(request, 'bioPortal/display_all_data.html', context)"""
 
 	return render(request, 'bioPortal/display_all_data_preparation.html')
 
 def query(request, query_text):
-	REST_URL = "http://data.bioontology.org"
-
 	search_result = ncbo_rest(REST_URL + "/search?q=" + query_text, API_KEY)
-	html = json2html.convert(json = search_result)
-
+	
+	html = "Query : " + query_text + "<br />"
+	if search_result == "ERROR!!" or json.loads(search_result).get('pageCount') == 0:
+		html += query_text + " not found!!"
+	else:
+		html += json2html.convert(json = search_result)
 	context = {'result' : html}
 	return render(request, 'bioPortal/query.html', context)
 
 def named_entity(named_entity_text):
-	context = {'named_entity_text' : named_entity_text}
+	named_entity_list = named_entity_text.split()
+	result = ""
+	for word in named_entity_list:
+		test = ncbo_rest(REST_URL + "/search?q=" + word, API_KEY)
+		if test == "ERROR!!" or json.loads(test).get('pageCount') == 0:
+			result += word + " "		
+		else:
+			result += "<a href='/bioPortal/query/" + word + "/' >" + word + "</a> "
+	context = {'named_entity_text' : result}
 	return context
 
 def ncbo_sparql(q,apikey,epr,f='application/json'):
@@ -75,6 +84,8 @@ def ncbo_sparql(q,apikey,epr,f='application/json'):
 		No extra libraries required.
 	"""
 	import urllib
+	import traceback
+	import sys
  
 	"""Function that uses urllib/urllib2 to issue a SPARQL query.
 	   By default it requests json as data format for the SPARQL resultset"""
@@ -98,5 +109,4 @@ def ncbo_rest(url, apikey):
 		opener.addheaders = [('Authorization', 'apikey token=' + apikey)]
 		return opener.open(url).read()
 	except Exception as e:
-	    traceback.print_exc(file=sys.stdout)
-	    raise e
+		return "ERROR!!"

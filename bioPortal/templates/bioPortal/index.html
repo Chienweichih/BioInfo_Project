@@ -1,14 +1,30 @@
-<br /><br /><br />
-<a href="/bioPortal/display_all_data/">display all data</a>
-<br /><br /><br />
-<form method="post">
-    {% csrf_token %}
-    {{ form_query.as_p }}
-    <input type="submit" value="Submit" />
-</form>
-<br /><br /><br />
-<form method="post">
-    {% csrf_token %}
-    {{ form_named_entity.as_p }}
-    <input type="submit" value="Submit" />
-</form>
+<!DOCTYPE HTML>
+<html style="height: 100%">
+<head>
+	<title>BioInfo Project</title>
+</head>
+
+<body style="height: 100%">
+<div class="wrapper" style="min-height: 100%; height: auto !important; height: 100%; margin: 0 auto -8em;">
+	<center style="color: #333; padding-top: 0px; font-family: Courier; font-size: 24px; font-weight: bold;">
+	<h1>生物資訊 Project</h1>
+	<a href="/bioPortal/display_all_data/" >Display All Data</a>
+	<form method="post">
+		{% csrf_token %}
+		{{ form_query.as_p }}
+		<input type="submit" value="query" />
+	</form>
+	<form method="post">
+		{% csrf_token %}
+		{{ form_named_entity.as_p }}
+		<input type="submit" value="analysis" />
+	</form>
+	</center>
+</div>
+<div class="footer">
+	<center style="color: #333; font-family: Courier; font-size: 11px;">
+	<br /><br />&copy; 陳佳均 江浩群 簡偉智
+	</center>
+</div>
+</body>
+</html>
