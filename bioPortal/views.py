@@ -1,12 +1,5 @@
 from django.shortcuts import render
 
-import urllib2
-import json
-from json2html import *
-
-REST_URL = "http://data.bioontology.org"
-API_KEY = "a4a36c45-883f-432e-9dec-5db68f11f767"
-
 def index(request):
 	from django.http import HttpResponseRedirect
 	from .forms import QueryForm
@@ -36,77 +29,53 @@ def index(request):
 	return render(request, 'bioPortal/index.html', context)
 
 def display_all_data(request):
-	sparql_service = "http://sparql.bioontology.org/sparql/"
-
-	#Some sample query.
-	query_string = """ 
-PREFIX omv: <http://omv.ontoware.org/2005/05/ontology#>
-
-SELECT ?ont ?name ?acr
-WHERE { ?ont a omv:Ontology;
-	         omv:acronym ?acr;
-	         omv:name ?name .
-} 
-"""
-	#ncbo_sparql
-	"""search_result = ncbo_sparql(query_string, API_KEY, sparql_service)
-	html = json2html.convert(json = search_result)
-	context = {'html' : html}
-	return render(request, 'bioPortal/display_all_data.html', context)"""
-
-	return render(request, 'bioPortal/display_all_data_preparation.html')
+	html = ""	
+	with open('go_name.data') as go_term:
+		for index, line in enumerate(go_term.readlines()):
+			html += ("%05d" % index) + " "
+			html += "<a href='/bioPortal/query/" + line  + "/' >" + line + "</a><br />"
+	context = {'result' : html}
+	return render(request, 'bioPortal/display_all_data.html', context)
 
 def query(request, query_text):
-	search_result = ncbo_rest(REST_URL + "/search?q=" + query_text, API_KEY)
-	
-	html = "Query : " + query_text + "<br />"
-	if search_result == "ERROR!!" or json.loads(search_result).get('pageCount') == 0:
-		html += query_text + " not found!!"
-	else:
-		html += json2html.convert(json = search_result)
+	html = ""
+	with open('go_term.data') as go_term:
+		lines = go_term.readlines()
+
+		for index, line in enumerate(lines):
+			if line.startswith('name: ') and line[6:-1] == query_text:
+				new_index = index - 1
+				while not lines[new_index].startswith('\n'):
+					html += lines[new_index] + "<br />"
+					new_index += 1
+				break
+
 	context = {'result' : html}
 	return render(request, 'bioPortal/query.html', context)
 
 def named_entity(named_entity_text):
-	named_entity_list = named_entity_text.split()
-	result = ""
-	for word in named_entity_list:
-		test = ncbo_rest(REST_URL + "/search?q=" + word, API_KEY)
-		if test == "ERROR!!" or json.loads(test).get('pageCount') == 0:
-			result += word + " "		
-		else:
-			result += "<a href='/bioPortal/query/" + word + "/' >" + word + "</a> "
-	context = {'named_entity_text' : result}
+	html = ""
+	with open('go_name.data') as go_term:
+		lines = go_term.readlines()
+		
+		while len(named_entity_text) != 0:
+			result_candidate = []
+			for line in lines:
+				if named_entity_text.startswith(line[:-1]):
+					result_candidate.append(line)
+
+			if result_candidate:
+				result = max(result_candidate, key=len)[:-1]
+				html += "<a href='/bioPortal/query/" + result + "/' >" + result + "</a>"
+				named_entity_text = named_entity_text[len(result):]
+
+			next_space = named_entity_text.find(" ")
+			if next_space != -1:
+				html += named_entity_text[:next_space] + " "
+				named_entity_text = named_entity_text[next_space + 1:]
+			else:
+				html += named_entity_text
+				break
+	
+	context = {'named_entity_text' : html}
 	return context
-
-def ncbo_sparql(q,apikey,epr,f='application/json'):
-	""" Simple Python script to query "http://sparql.bioontology.org/sparql/"
-		No extra libraries required.
-	"""
-	import urllib
-	import traceback
-	import sys
- 
-	"""Function that uses urllib/urllib2 to issue a SPARQL query.
-	   By default it requests json as data format for the SPARQL resultset"""
-
-	try:
-	    params = {'query': q, 'apikey': apikey}
-	    params = urllib.urlencode(params)
-	    opener = urllib2.build_opener(urllib2.HTTPHandler)
-	    request = urllib2.Request(epr+'?'+params)
-	    request.add_header('Accept', f)
-	    request.get_method = lambda: 'GET'
-	    url = opener.open(request)
-	    return url.read()
-	except Exception as e:
-	    traceback.print_exc(file=sys.stdout)
-	    raise e
-
-def ncbo_rest(url, apikey):
-	try:
-		opener = urllib2.build_opener()
-		opener.addheaders = [('Authorization', 'apikey token=' + apikey)]
-		return opener.open(url).read()
-	except Exception as e:
-		return "ERROR!!"

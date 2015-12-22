@@ -1,18 +1,26 @@
 # BioInfo_Project
 
-### Sample Code!!! https://github.com/ncbo/ncbo_rest_sample_code
+此 project 要用的資料庫是 BioPortal<br />
+http://bioportal.bioontology.org/<br />
 
-我們做 project 要用的資料庫是 BioPortal <br />
-http://bioportal.bioontology.org/
+使用這個 Gene Ontology<br />
+https://bioportal.bioontology.org/ontologies/GO<br />
 
-好像是api的東西 用REST跟他要資料吧 <br />
-https://www.biocatalogue.org/services/2053
+Django 的教學<br />
+https://daikeren.gitbooks.io/django_tutorial/content/django/README.html<br />
+https://docs.djangoproject.com/en/1.9/<br />
 
-REST的使用，我找到這個工具可以寫網頁 <br />
-http://www.django-rest-framework.org/
+### 以下是查到，最後沒用到的：
 
-Django 的教學 <br />
-https://daikeren.gitbooks.io/django_tutorial/content/django/README.html
+ncbo sample code<br />
+https://github.com/ncbo/ncbo_rest_sample_code<br />
+https://github.com/ncbo/bioportal-sparql-proxy<br />
 
-Secure tunnels to localhost <br />
+BioPortal 的 api，用REST跟他要資料<br />
+https://www.biocatalogue.org/services/2053<br />
+
+Django REST的使用<br />
+http://www.django-rest-framework.org/<br />
+
+Secure tunnels to localhost<br />
 https://ngrok.com/
