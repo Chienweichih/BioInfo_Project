@@ -96,6 +96,10 @@
   
 	就可以啟動 virtualenv，從此只要在 virtualenv 下面安裝的 package 都只會存在於這個 virtualenv 當中。  
   
+	結束虛擬環境  
+  
+	> deactivate  
+  
 * <h4 id="Django">Django</h4>  
   
 	在 terminal 底下輸入：  
