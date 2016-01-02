@@ -1,19 +1,19 @@
 #BioInfo_Project  
   
 ###系統介面使用說明  
-![main page]()  
+![main page](https://raw.githubusercontent.com/Chienweichih/BioInfo_Project/master/snapshot/main.png)  
   
 按下 Display All Data 按鈕，顯示所有可以 query 的 data  
   
-![display all]()  
+![display all](https://raw.githubusercontent.com/Chienweichih/BioInfo_Project/master/snapshot/display_all.png)  
   
 在 Query Text: 後輸入要搜尋的詞，按下 query 按鈕就會顯示結果頁面  
   
-![query result]()  
+![query result](https://raw.githubusercontent.com/Chienweichih/BioInfo_Project/master/snapshot/query.png)  
   
 在 Abstract Text: 後輸入要處理的論文摘要，按下 analysis 按鈕就會顯示結果頁面  
   
-![abstract result]()  
+![abstract result](https://raw.githubusercontent.com/Chienweichih/BioInfo_Project/master/snapshot/abstract.png)  
   
 ###建構本專案所使用的工具及版本  
   
