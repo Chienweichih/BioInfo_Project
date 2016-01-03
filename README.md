@@ -57,10 +57,10 @@ html 用到的 form 寫在這裡：
 *************************************************************************************************************
   
 <h3 id="Build_Step">專案執行教學</h3>  
-如果已經安裝
-1. [Python **2.7.6**](#Python)  
-2. [Virtualenv **1.11.4**](#Virtualenv)  
-3. [Django **1.9**](#Django)  
+如果已經安裝  
+	1. [Python **2.7.6**](#Python)  
+	2. [Virtualenv **1.11.4**](#Virtualenv)  
+	3. [Django **1.9**](#Django)  
 可以直接執行：  
   
 打開 *終端機* 或 *命令提示字元* ，移動目錄到 BioInfo_Project 資料夾內  
@@ -85,11 +85,11 @@ html 用到的 form 寫在這裡：
 	* Debian/Ubuntu 系統：  
 	在終端機輸入以下指令：  
 		  
-	> sudo apt-get install python  
+		> sudo apt-get install python  
 	  
 	* Red Hat/Fedora 系統：  
 		  
-	> sudo yum install python  
+		> sudo yum install python  
   
 * <h4 id="Virtualenv">Virtualenv</h4>  
 	在開發 Python 專案的時候，通常會使用 virtualenv。使用 virtualenv 的好處如下：  
