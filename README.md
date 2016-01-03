@@ -1,6 +1,19 @@
 #BioInfo_Project  
   
-###系統介面使用說明  
+###Outline  
+* [系統介面使用說明](#System_Interface)  
+* [系統內容功能詳細敘述](#System_Content)  
+* 建構本專案所使用的工具及版本  
+	1. [Python **2.7.6**](#Python)  
+	2. [Virtualenv **1.11.4**](#Virtualenv)  
+	3. [Django **1.9**](#Django)  
+* [專案執行教學](#Build_Step)  
+* [工具安裝教學](#Tool_Install)  
+* [Reference](#Reference)  
+  
+*************************************************************************************************************
+  
+<h3 id="System_Interface">系統介面使用說明</h3>  
 ![main page](https://raw.githubusercontent.com/Chienweichih/BioInfo_Project/master/snapshot/main.png)  
   
 按下 Display All Data 按鈕，顯示所有可以 query 的 data  
@@ -15,13 +28,56 @@
   
 ![abstract result](https://raw.githubusercontent.com/Chienweichih/BioInfo_Project/master/snapshot/abstract.png)  
   
-###建構本專案所使用的工具及版本  
+*************************************************************************************************************
   
+<h3 id="System_Content">專案內容功能詳細敘述</h3>  
+這個 Python 檔案紀錄系統載入頁面時需要做的所有動作:  
+  
+	> BioInfo_Project/bioPortal/views.py  
+  
+這個專案所顯示的 html 介面的 template 放在這個資料夾下：  
+  
+	> BioInfo_Project/bioPortal/templates/bioPortal/  
+  
+html 用到的 form 寫在這裡：  
+  
+	> BioInfo_Project/bioPortal/forms.py  
+  
+系統要處理的 url request 寫在這裡：  
+  
+	> BioInfo_Project/bioPortal/urls.py  
+  
+這兩個檔案是 bioPortal 的 [Gene Ontology](https://bioportal.bioontology.org/ontologies/GO)，在程式執行時要讀取的檔案：  
+  
+	> BioInfo_Project/go_name.data  
+	> BioInfo_Project/go_term.data  
+  
+其他的就是 Django 專案需要的程式，如果想要了解可以閱讀 Django 的相關文件  
+  
+*************************************************************************************************************
+  
+<h3 id="Build_Step">專案執行教學</h3>  
+如果已經安裝
 1. [Python **2.7.6**](#Python)  
 2. [Virtualenv **1.11.4**](#Virtualenv)  
 3. [Django **1.9**](#Django)  
+可以直接執行：  
   
-###工具安裝教學  
+打開 *終端機* 或 *命令提示字元* ，移動目錄到 BioInfo_Project 資料夾內  
+  
+執行  
+  
+	> python manage.py runserver 0.0.0.0:8000  
+  
+打開瀏覽器，網址輸入  
+  
+	> http://localhost:8000/  
+  
+就可以看到網站頁面  
+  
+*************************************************************************************************************
+  
+<h3 id="Tool_Install">工具安裝教學</h3>  
 * <h4 id="Python">Python</h4>  
 	* Windows 或 OS X 系統：  
 	從[Pyhton官網](https://www.python.org/)下載第二版的Python安裝檔，依照提示步驟安裝即可 （記得安裝的路徑）  
@@ -112,20 +168,9 @@
   
 	便會下載最新版的 django 並且完成安裝。  
   
-###專案執行教學  
-打開 *終端機* 或 *命令提示字元* ，移動目錄到 BioInfo_Project 資料夾  
+*************************************************************************************************************
   
-執行  
-  
-	> python manage.py runserver 0.0.0.0:8000  
-  
-打開瀏覽器，網址輸入  
-  
-	> http://localhost:8000/  
-  
-就可以看到網站頁面  
-  
-###Reference  
+<h3 id="Reference">Reference</h3>  
   
 此 project 所用的資料庫是 BioPortal  
 http://bioportal.bioontology.org/  
